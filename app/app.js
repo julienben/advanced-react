@@ -1,5 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import Input from './components/Input';
 
 class TweetBox extends React.Component {
   constructor(props) {
@@ -54,15 +57,28 @@ class TweetBox extends React.Component {
       <div className="card bg-light">
         <div className="card-body text-right">
           {this.renderOverflowAlert()}
-          <textarea className="form-control" onChange={this.handleChange} />
+          <textarea
+            value={this.state.text}
+            className="form-control"
+            onChange={this.handleChange}
+          />
+          <Input onChange={this.handleChange} value={this.state.text} />
           <br />
           <span>{this.getRemainingChars()}</span>
 
-          <button className="btn btn-primary" disabled={isTweetButtonDisabled}>
-            Tweet
+          <button
+            type="button"
+            className="btn btn-primary"
+            disabled={isTweetButtonDisabled}
+          >
+            Tweet Yoself
           </button>
 
-          <button className="btn btn-secondary" onClick={this.togglePhoto}>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={this.togglePhoto}
+          >
             {this.state.photoAdded ? '✓ Photo Added' : 'Add Photo'}
           </button>
         </div>
