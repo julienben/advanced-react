@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Input from '../../components/Input';
 import { updateTweet } from './actions';
+import TextArea from '../../components/TextArea';
 
 class TweetBox extends React.Component {
   handleChange = e => {
@@ -49,12 +49,7 @@ class TweetBox extends React.Component {
       <div className="card bg-light">
         <div className="card-body text-right">
           {this.renderOverflowAlert()}
-          <textarea
-            value={this.props.text}
-            className="form-control"
-            onChange={this.handleChange}
-          />
-          <Input onChange={this.handleChange} value={this.props.text} />
+          <TextArea value={this.props.text} onChange={this.handleChange} />
           <br />
           <span>{this.getRemainingChars()}</span>
 
