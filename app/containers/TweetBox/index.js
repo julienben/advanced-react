@@ -14,23 +14,18 @@ class TweetBox extends React.Component {
   };
 
   renderOverflowAlert = () => {
-    // TODO: Move the actual overflowText calculation to Redux
     // TODO: Move the OverflowAlert to its own component
     // TODO: Remove this method and replace it with a ternary inside render()
+    // TODO: Fix issue with collapsing spaces
     if (this.props.remainingChars < 0) {
-      const imageLength = this.props.photoAdded ? 23 : 0;
-      const beforeOverflowText = this.props.text.substring(
-        280 - imageLength - 10,
-        280 - imageLength,
-      );
-      const overflowText = this.props.text.substring(280 - imageLength);
-
       return (
         <div className="alert alert-warning text-left">
           <strong>Oops! Too Long:</strong>
           &nbsp; &#8230;
-          {beforeOverflowText}
-          <strong className="bg-danger text-light">{overflowText}</strong>
+          {this.props.beforeOverflowText}
+          <strong className="bg-danger text-light">
+            {this.props.overflowText}
+          </strong>
         </div>
       );
     }
@@ -75,6 +70,8 @@ TweetBox.propTypes = {
   photoAdded: PropTypes.bool.isRequired,
   remainingChars: PropTypes.number.isRequired,
   text: PropTypes.string.isRequired,
+  overflowText: PropTypes.string.isRequired,
+  beforeOverflowText: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = store => store.home;
