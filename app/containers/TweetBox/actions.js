@@ -4,3 +4,9 @@ export function updateTweet(text) {
     text,
   };
 }
+
+export function togglePhoto() {
+  return {
+    type: 'TOGGLE_PHOTO',
+  };
+}

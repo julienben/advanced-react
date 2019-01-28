@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { updateTweet } from './actions';
 import TextArea from '../../components/TextArea';
+import { updateTweet, togglePhoto } from './actions';
 
 class TweetBox extends React.Component {
   handleChange = e => {
@@ -10,18 +10,14 @@ class TweetBox extends React.Component {
   };
 
   togglePhoto = () => {
-    // TODO: Switch to redux here
-    this.setState(prevState => ({ photoAdded: !prevState.photoAdded }));
-  };
-
-  getRemainingChars = () => {
-    let chars = 280 - this.props.text.length;
-    if (this.props.photoAdded) chars -= 23;
-    return chars;
+    this.props.dispatch(togglePhoto());
   };
 
   renderOverflowAlert = () => {
-    if (this.getRemainingChars() < 0) {
+    // TODO: Move the actual overflowText calculation to Redux
+    // TODO: Move the OverflowAlert to its own component
+    // TODO: Remove this method and replace it with a ternary inside render()
+    if (this.props.remainingChars < 0) {
       const imageLength = this.props.photoAdded ? 23 : 0;
       const beforeOverflowText = this.props.text.substring(
         280 - imageLength - 10,
@@ -51,7 +47,7 @@ class TweetBox extends React.Component {
           {this.renderOverflowAlert()}
           <TextArea value={this.props.text} onChange={this.handleChange} />
           <br />
-          <span>{this.getRemainingChars()}</span>
+          <span>{this.props.remainingChars}</span>
 
           <button
             type="button"
@@ -77,6 +73,7 @@ class TweetBox extends React.Component {
 TweetBox.propTypes = {
   dispatch: PropTypes.func.isRequired,
   photoAdded: PropTypes.bool.isRequired,
+  remainingChars: PropTypes.number.isRequired,
   text: PropTypes.string.isRequired,
 };
 
