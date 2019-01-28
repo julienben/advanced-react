@@ -27,16 +27,14 @@ class TweetBox extends React.Component {
           />
           <TextArea value={this.props.text} onChange={this.handleChange} />
           <br />
-          <span>{this.props.remainingChars}</span>
-
+          <span>{this.props.remainingChars}</span>{' '}
           <button
             type="button"
             className="btn btn-primary"
             disabled={isTweetButtonDisabled}
           >
             Tweet Yoself
-          </button>
-
+          </button>{' '}
           <button
             type="button"
             className="btn btn-secondary"

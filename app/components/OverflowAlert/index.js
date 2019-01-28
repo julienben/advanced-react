@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-// TODO: Fix issue with collapsing spaces
+import cc from 'classcat';
+import classes from './index.scss';
 
 const OverflowAlert = ({ overflowText, beforeOverflowText }) => {
   if (!overflowText) return null;
 
   return (
-    <div className="alert alert-warning text-left">
+    <div className={cc([classes.alert, 'alert', 'alert-warning', 'text-left'])}>
       <strong>Oops! Too Long:</strong>
       &nbsp; &#8230;
       {beforeOverflowText}

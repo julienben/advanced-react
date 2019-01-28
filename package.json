@@ -39,6 +39,7 @@
   "dependencies": {
     "@babel/polyfill": "7.2.5",
     "bootstrap": "4.2.1",
+    "classcat": "3.2.5",
     "cross-env": "5.2.0",
     "express": "4.16.4",
     "lodash": "4.17.11",
