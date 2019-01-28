@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TextArea from '../../components/TextArea';
+import OverflowAlert from '../../components/OverflowAlert';
 import { updateTweet, togglePhoto } from './actions';
 
 class TweetBox extends React.Component {
@@ -13,25 +14,6 @@ class TweetBox extends React.Component {
     this.props.dispatch(togglePhoto());
   };
 
-  renderOverflowAlert = () => {
-    // TODO: Move the OverflowAlert to its own component
-    // TODO: Remove this method and replace it with a ternary inside render()
-    // TODO: Fix issue with collapsing spaces
-    if (this.props.remainingChars < 0) {
-      return (
-        <div className="alert alert-warning text-left">
-          <strong>Oops! Too Long:</strong>
-          &nbsp; &#8230;
-          {this.props.beforeOverflowText}
-          <strong className="bg-danger text-light">
-            {this.props.overflowText}
-          </strong>
-        </div>
-      );
-    }
-    return '';
-  };
-
   render() {
     const isTweetButtonDisabled =
       this.props.text.length === 0 && !this.props.photoAdded;
@@ -39,7 +21,10 @@ class TweetBox extends React.Component {
     return (
       <div className="card bg-light">
         <div className="card-body text-right">
-          {this.renderOverflowAlert()}
+          <OverflowAlert
+            overflowText={this.props.overflowText}
+            beforeOverflowText={this.props.beforeOverflowText}
+          />
           <TextArea value={this.props.text} onChange={this.handleChange} />
           <br />
           <span>{this.props.remainingChars}</span>
