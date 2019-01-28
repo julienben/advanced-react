@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import routes from '../../containers/App/routes';
 
 export default () => (
   <nav className="navbar navbar-expand navbar-dark bg-dark mb-4">
@@ -8,16 +9,13 @@ export default () => (
         App Name
       </Link>
       <ul className="navbar-nav">
-        <li className="nav-item active">
-          <Link className="nav-link" to="/">
-            Home
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/tweet-box/">
-            Tweet Box
-          </Link>
-        </li>
+        {routes.map((route, index) => (
+          <li key={index} className="nav-item">
+            <NavLink exact={route.exact} className="nav-link" to={route.path}>
+              {route.name}
+            </NavLink>
+          </li>
+        ))}
       </ul>
     </div>
   </nav>

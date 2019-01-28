@@ -1,20 +1,27 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
-import TweetBox from '../TweetBox';
+import routes from './routes';
 
-const Home = () => <h2>Home</h2>;
+const NotFoundPage = () => <h2>404 Page Not Found</h2>;
 
 const App = () => (
-  <Router
-  // TODO: What's this?
-  // forceRefresh
-  >
+  <Router>
     <>
       <Navbar />
       <div className="container">
-        <Route path="/" exact component={Home} />
-        <Route path="/tweet-box/" component={TweetBox} />
+        <Switch>
+          {routes.map((route, index) => (
+            <Route
+              key={index}
+              path={route.path}
+              exact={route.exact}
+              component={route.component}
+            />
+          ))}
+
+          <Route component={NotFoundPage} />
+        </Switch>
       </div>
     </>
   </Router>
