@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import injectSaga from '../../utils/sagaInjector';
 import TextArea from '../../components/TextArea';
 import OverflowAlert from '../../components/OverflowAlert';
 import { updateTweet, togglePhoto } from './actions';
+import saga from './saga';
 
 class TweetBox extends React.Component {
   handleChange = e => {
@@ -65,7 +67,11 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
+const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(TweetBox);
+);
+
+const withSaga = injectSaga(saga);
+
+export default withSaga(withConnect(TweetBox));
