@@ -1,14 +1,15 @@
 import React from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import { ReactReduxContext } from 'react-redux';
+import createReducer from './reducers';
 
-export default ({ key, saga }) => WrappedComponent => {
-  class SagaInjector extends React.Component {
+export default ({ key, reducer }) => WrappedComponent => {
+  class ReducerInjector extends React.Component {
     static WrappedComponent = WrappedComponent;
 
     static contextType = ReactReduxContext;
 
-    static displayName = `withSaga(${WrappedComponent.displayName ||
+    static displayName = `withReducer(${WrappedComponent.displayName ||
       WrappedComponent.name ||
       'Component'})`;
 
@@ -16,10 +17,10 @@ export default ({ key, saga }) => WrappedComponent => {
       super(props, context);
 
       const { store } = context;
-      if (store.injectedSagas[key]) return;
 
-      store.injectedSagas[key] = true;
-      store.runSaga(saga);
+      store.injectedReducers[key] = reducer;
+      const rootReducer = createReducer(store.injectedReducers);
+      store.replaceReducer(rootReducer);
     }
 
     render() {
@@ -27,5 +28,5 @@ export default ({ key, saga }) => WrappedComponent => {
     }
   }
 
-  return hoistNonReactStatics(SagaInjector, WrappedComponent);
+  return hoistNonReactStatics(ReducerInjector, WrappedComponent);
 };

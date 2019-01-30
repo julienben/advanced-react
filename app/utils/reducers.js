@@ -1,6 +1,13 @@
 import { combineReducers } from 'redux';
-import homeReducer from '../containers/TweetBox/reducer';
 
-export default combineReducers({
-  home: homeReducer,
-});
+export default function createReducer(injectedReducers = {}) {
+  let blank = {};
+  if (Object.keys(injectedReducers).length === 0) blank = (state = {}) => state;
+
+  const rootReducer = combineReducers({
+    blank,
+    ...injectedReducers,
+  });
+
+  return rootReducer;
+}

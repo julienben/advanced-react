@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import injectSaga from '../../utils/sagaInjector';
+import injectReducer from '../../utils/reducerInjector';
 import TextArea from '../../components/TextArea';
 import OverflowAlert from '../../components/OverflowAlert';
 import { updateTweet, togglePhoto } from './actions';
+import reducer, { initialState } from './reducer';
 import saga from './saga';
 
 class TweetBox extends React.Component {
@@ -59,19 +61,22 @@ TweetBox.propTypes = {
   beforeOverflowText: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = store => store.home;
-
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
   };
 }
 
+const key = 'home';
+
+const mapStateToProps = store => store[key] || initialState;
+
+const withReducer = injectReducer({ key, reducer });
+const withSaga = injectSaga({ key, saga });
+
 const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
 );
 
-const withSaga = injectSaga({ key: 'home', saga });
-
-export default withSaga(withConnect(TweetBox));
+export default withConnect(withSaga(withReducer(TweetBox)));
