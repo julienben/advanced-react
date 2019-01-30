@@ -72,6 +72,6 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withSaga = injectSaga(saga);
+const withSaga = injectSaga({ key: 'home', saga });
 
 export default withSaga(withConnect(TweetBox));

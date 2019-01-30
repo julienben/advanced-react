@@ -23,6 +23,7 @@ export default function configureStore(initialState = {}) {
   );
 
   store.runSaga = sagaMiddleware.run;
+  store.injectedSagas = {};
 
   return store;
 }

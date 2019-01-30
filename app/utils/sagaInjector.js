@@ -2,7 +2,7 @@ import React from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import { ReactReduxContext } from 'react-redux';
 
-export default saga => WrappedComponent => {
+export default ({ key, saga }) => WrappedComponent => {
   class SagaInjector extends React.Component {
     static WrappedComponent = WrappedComponent;
 
@@ -13,7 +13,11 @@ export default saga => WrappedComponent => {
       'Component'})`;
 
     componentWillMount() {
-      this.context.store.runSaga(saga);
+      const { store } = this.context;
+      if (store.injectedSagas[key]) return;
+
+      store.injectedSagas[key] = true;
+      store.runSaga(saga);
     }
 
     render() {
