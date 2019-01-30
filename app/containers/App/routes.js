@@ -1,5 +1,6 @@
 import React from 'react';
-import TweetBox from '../TweetBox/Loadable';
+import TweetBox from '../TweetBox';
+import RepoLister from '../RepoLister';
 
 const Home = () => <h2>Home</h2>;
 
@@ -14,5 +15,10 @@ export default [
     path: '/tweet-box/',
     name: 'Tweet Box',
     component: TweetBox,
+  },
+  {
+    path: '/repo-lister/',
+    name: 'Repo Lister',
+    component: RepoLister,
   },
 ];
