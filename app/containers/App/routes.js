@@ -1,6 +1,6 @@
 import React from 'react';
-import TweetBox from '../TweetBox/Loadable';
-import RepoLister from '../RepoLister/Loadable';
+import TweetBox from 'containers/TweetBox/Loadable';
+import RepoLister from 'containers/RepoLister/Loadable';
 
 const Home = () => <h2>Home</h2>;
 

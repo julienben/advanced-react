@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import request from '../../utils/network';
+import request from 'utils/network';
 
 import { fetchReposSuccess, fetchReposError } from './actions';
 import { FETCH_REPOS } from './constants';

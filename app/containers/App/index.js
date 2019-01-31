@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Navbar from '../../components/Navbar';
+import Navbar from 'components/Navbar';
 import routes from './routes';
 
 const NotFoundPage = () => <h2>404 Page Not Found</h2>;

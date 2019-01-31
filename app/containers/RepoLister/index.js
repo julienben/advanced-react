@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import injectSaga from '../../utils/sagaInjector';
-import injectReducer from '../../utils/reducerInjector';
-import debounce from '../../utils/debounce';
+import injectSaga from 'utils/sagaInjector';
+import injectReducer from 'utils/reducerInjector';
+import debounce from 'utils/debounce';
 import { fetchRepos } from './actions';
 import reducer, { initialState } from './reducer';
 import saga from './saga';

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import injectSaga from '../../utils/sagaInjector';
-import injectReducer from '../../utils/reducerInjector';
-import TextArea from '../../components/TextArea';
-import OverflowAlert from '../../components/OverflowAlert';
+import injectSaga from 'utils/sagaInjector';
+import injectReducer from 'utils/reducerInjector';
+import TextArea from 'components/TextArea';
+import OverflowAlert from 'components/OverflowAlert';
 import { updateTweet, togglePhoto } from './actions';
 import reducer, { initialState } from './reducer';
 import saga from './saga';

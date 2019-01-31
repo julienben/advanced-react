@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import routes from '../../containers/App/routes';
+import routes from 'containers/App/routes';
 
 export default () => (
   <nav className="navbar navbar-expand navbar-dark bg-dark mb-4">
