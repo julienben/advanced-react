@@ -1,4 +1,5 @@
 import { call, takeLatest } from 'redux-saga/effects';
+import { TOGGLE_PHOTO } from './constants';
 
 function* togglePhoto(action) {
   try {
@@ -9,7 +10,7 @@ function* togglePhoto(action) {
 }
 
 function* defaultSaga() {
-  yield takeLatest('TOGGLE_PHOTO', togglePhoto);
+  yield takeLatest(TOGGLE_PHOTO, togglePhoto);
 }
 
 export default defaultSaga;

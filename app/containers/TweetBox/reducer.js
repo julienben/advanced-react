@@ -1,3 +1,6 @@
+import produce from 'immer';
+import { UPDATE_TWEET, TOGGLE_PHOTO } from './constants';
+
 export const initialState = {
   text: '',
   photoAdded: false,
@@ -23,25 +26,31 @@ const calculateOverflowTexts = (text, photoAdded) => {
   };
 };
 
-function homeReducer(state = initialState, action) {
-  const newState = JSON.parse(JSON.stringify(state));
-  switch (action.type) {
-    case 'UPDATE_TWEET':
-      return Object.assign(newState, {
-        text: action.text,
-        remainingChars: calculateRemainingChars(action.text, state.photoAdded),
-        ...calculateOverflowTexts(action.text, state.photoAdded),
-      });
-    case 'TOGGLE_PHOTO':
-      const newPhotoAdded = !state.photoAdded; // eslint-disable-line no-case-declarations
-      return Object.assign(newState, {
-        photoAdded: newPhotoAdded,
-        remainingChars: calculateRemainingChars(newState.text, newPhotoAdded),
-        ...calculateOverflowTexts(newState.text, newPhotoAdded),
-      });
-    default:
-      return state;
-  }
-}
+/* eslint-disable default-case, no-param-reassign */
+const tweetBoxReducer = (state = initialState, action) =>
+  produce(state, draft => {
+    switch (action.type) {
+      case UPDATE_TWEET:
+        draft.text = action.text;
+        break;
+      case TOGGLE_PHOTO:
+        draft.photoAdded = !state.photoAdded;
+        break;
+    }
 
-export default homeReducer;
+    // Update remainingChars in all cases
+    draft.remainingChars = calculateRemainingChars(
+      draft.text,
+      draft.photoAdded,
+    );
+
+    // Update overflowTexts in all cases
+    const { overflowText, beforeOverflowText } = calculateOverflowTexts(
+      draft.text,
+      draft.photoAdded,
+    );
+    draft.overflowText = overflowText;
+    draft.beforeOverflowText = beforeOverflowText;
+  });
+
+export default tweetBoxReducer;

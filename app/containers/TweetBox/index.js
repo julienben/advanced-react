@@ -67,7 +67,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const key = 'home';
+const key = 'tweetBox';
 
 const mapStateToProps = store => store[key] || initialState;
 
