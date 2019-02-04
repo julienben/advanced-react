@@ -1,0 +1,39 @@
+import React from 'react';
+import Select from 'components/Select';
+
+const options = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+].map(m => ({ name: m, value: m }));
+
+class SelectDemo extends React.Component {
+  state = { value: 'January' };
+
+  onChange = e => {
+    this.setState({ value: e.target.value });
+  };
+
+  render() {
+    return (
+      <Select
+        name="testSelect"
+        labelText="Pick a month"
+        value={this.state.value}
+        options={options}
+        onChange={this.onChange}
+      />
+    );
+  }
+}
+
+export default SelectDemo;
