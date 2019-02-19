@@ -1,5 +1,6 @@
 import React from 'react';
 import Select from 'components/Select';
+import Select2 from 'components/Select2';
 
 const options = [
   'January',
@@ -17,7 +18,7 @@ const options = [
 ].map(m => ({ name: m, value: m }));
 
 class SelectDemo extends React.Component {
-  state = { value: 'January' };
+  state = { value: 'August' };
 
   onChange = e => {
     this.setState({ value: e.target.value });
@@ -25,13 +26,25 @@ class SelectDemo extends React.Component {
 
   render() {
     return (
-      <Select
-        name="testSelect"
-        labelText="Pick a month"
-        value={this.state.value}
-        options={options}
-        onChange={this.onChange}
-      />
+      <div>
+        <Select
+          name="testSelect"
+          labelText="Pick a month"
+          value={this.state.value}
+          options={options}
+          onChange={this.onChange}
+        />
+
+        <div style={{ height: 100 }} />
+
+        <Select2
+          name="testSelect"
+          labelText="Pick a month"
+          value={this.state.value}
+          options={options}
+          onChange={this.onChange}
+        />
+      </div>
     );
   }
 }
