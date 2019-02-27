@@ -1,4 +1,5 @@
 import React from 'react';
+import cc from 'classcat';
 import classes from './index.scss';
 
 /* eslint-disable */
@@ -9,10 +10,18 @@ class Option extends React.Component {
     this.props.onChange(e);
   };
 
+  highlightMe = () => {
+    this.props.highlightOption(this.props.index)
+  }
+
   render() {
     return (
       <li
-        className={this.props.highlighted ? classes.highlighted : ''}
+        className={cc({
+          [classes.highlighted]: this.props.highlighted,
+          [classes.selected]: this.props.selected,
+        })}
+        onMouseEnter={this.highlightMe}
         onClick={this.onChange}
       >
         {this.props.children}

@@ -1,4 +1,5 @@
 import React from 'react';
+import throttle from 'lodash/throttle';
 import Option from './Option';
 import classes from './index.scss';
 
@@ -20,7 +21,10 @@ class Select2 extends React.Component {
 
   componentDidMount() {
     window.addEventListener('click', this.hideOptionsOnClickAway, true);
-    window.addEventListener('keydown', this.handleKeyboardEvents, true);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('click', this.hideOptionsOnClickAway, true)
   }
 
   toggleVisibility = () =>
@@ -32,31 +36,43 @@ class Select2 extends React.Component {
     if (!this.ref.contains(e.target)) this.setState({ visible: false });
   };
 
+  handleMoveIndexBy = (by) =>
+    this.setState(prevState => {
+      const { length } = this.props.options;
+      return { highlightedIndex: (length + prevState.highlightedIndex + by) % length };
+    });
+
+
+  handleDownKey = () => this.handleMoveIndexBy(1)
+  handleUpKey = () => this.handleMoveIndexBy(-1)
+
+  throttledHandleUpKey = throttle(this.handleUpKey, 200)
+  throttledHandleDownKey = throttle(this.handleDownKey, 200)
+
   handleKeyboardEvents = e => {
     const key = e.which;
-    switch (true) {
-      case key === 38: // Up
-        if (this.state.visible)
-          this.setState(prevState => {
-            let next;
-            if (prevState.highlightedIndex === 0)
-              next = this.props.options.length - 1;
-            else next = prevState.highlightedIndex - 1;
-            return { highlightedIndex: next };
-          });
+    switch (key) {
+      case 38: // Up
+        if (this.state.visible) this.throttledHandleUpKey();
+        else this.toggleVisibility();
         break;
-      case key === 40: // Down
-        if (this.state.visible)
-          this.setState(prevState => {
-            let next;
-            if (prevState.highlightedIndex === this.props.options.length - 1)
-              next = 0;
-            else next = prevState.highlightedIndex + 1;
-            return { highlightedIndex: next };
-          });
+      case 40: // Down
+        if (this.state.visible) this.throttledHandleDownKey();
+        else this.toggleVisibility();
+        break;
+      case 13: // Return
+        if (this.state.visible) {
+          this.props.onChange(
+            { target: { value: this.props.options[this.state.highlightedIndex].value } }
+          );
+          this.setState({ visible: false });
+        }
         break;
     }
   };
+
+  highlightOption = (i) =>
+    this.setState({ highlightedIndex: i });
 
   render() {
     return (
@@ -64,6 +80,8 @@ class Select2 extends React.Component {
         ref={el => (this.ref = el)}
         onClick={this.toggleVisibility}
         className={classes.select}
+        tabIndex={0}
+        onKeyDown={this.handleKeyboardEvents}
       >
         <div>{this.props.value}</div>
         {this.state.visible && (
@@ -71,9 +89,12 @@ class Select2 extends React.Component {
             {this.props.options.map((option, i) => (
               <Option
                 highlighted={i === this.state.highlightedIndex}
+                selected={option.value === this.props.value}
                 key={i}
                 value={option.value}
                 onChange={this.props.onChange}
+                index={i}
+                highlightOption={this.highlightOption}
               >
                 {option.name}
               </Option>

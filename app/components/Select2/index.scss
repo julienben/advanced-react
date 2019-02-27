@@ -5,6 +5,10 @@ div.select {
   z-index: 0;
   user-select: none;
   cursor: pointer;
+
+  &:focus {
+    border-color: blue;
+  }
 }
 
 ul.options {
@@ -22,12 +26,12 @@ ul.options {
     padding: 5px 10px;
     transition: background-color 150ms ease-in-out 10ms;
 
-    &:hover {
-      background-color: #eee;
-    }
-
     &.highlighted {
       background-color: #ddeeee;
+    }
+
+    &.selected {
+      font-weight: 700;
     }
   }
 }
